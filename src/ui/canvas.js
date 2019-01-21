@@ -2,14 +2,14 @@
  * This one will host code that handles the clicks and then basically transmit the valve switching code from here
  **/
 
-import Setup from '../control/setup';
+import Setup from '../core/setup';
 
 export default class Canvas{
     constructor(setup){
         /*
         Step 1: Retrieve the microfluidic object
         Step 2: Send the valves and callback function to 3DuF
-        Step 3:
+        Step 3: Send requisite command to peripheral manager
          */
         let json = setup.Chip.JSON;
         this.__setup = setup;

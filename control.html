@@ -10,9 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <script src="./lib/nouislider/nouislider.min.js"></script>
-    <script src="./lib/paper/paper-full.min.js"></script>
     <script src="./lib/filesaver/FileSaver.min.js"></script>
-    <script src="./lib/three/three.min.js"></script>
 
     <link rel="stylesheet" href="./lib/nouislider/nouislider.min.css">
     <link rel="stylesheet" href="./assets/stylesheets/modified.css">
@@ -21,22 +19,22 @@
     <!--<link rel="stylesheet" href="../stylesheets/modified.css">-->
 
     <!-- Bootstrap Core CSS -->
-    <link href="./lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="./lib/bootstrap/bootstrap.min.css" rel="stylesheet">-->
     <!-- Custom CSS for Page -->
     <link href="./assets/stylesheets/controlFull.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
-    <link href="./lib/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!--<link href="./lib/metisMenu/metisMenu.min.css" rel="stylesheet">-->
     <!-- Custom CSS -->
-    <link href="./lib/sbadmin/sb-admin-2.css" rel="stylesheet">
+    <!--<link href="./lib/sbadmin/sb-admin-2.css" rel="stylesheet">-->
+
     <!-- Toastr CDN -->
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- Custom Fonts -->
-    <link href="./lib/font-awesome/font-awesome.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script src="../javascripts/JSONValveDispenserLoad.js" type="application/javascript"></script>
 
     <div id="findJSON" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -53,22 +51,13 @@
                 </div>
                 <div class="modal-footer">
                     <!--<button type="button" class="btn btn-default" data-dismiss="modal" onclick="setNewSession();" > Start New Session </button>-->
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="location.reload();"> Load  </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="loadJSON"> Load  </button>
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="../javascripts/loadControlJSON.js"></script>
-
-
-
-
 
     <link href="./assets/stylesheets/controlFull.css" rel="stylesheet">
-    <script type="text/javascript" src="../javascripts/serialcommunication.js"></script>
-    <script type="text/javascript" src="../javascripts/ValveDispenserJSONTracking.js"></script>
-    <script type="text/javascript" src="../javascripts/initiate_data.js"></script>
-
 
     <!--Template for VALVES to be placed over graph canvas-->
     <template id="valve-template" action="this.preventDefault();">
@@ -153,6 +142,7 @@
 
     <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="demo.css">
 
 </head>
 
@@ -216,10 +206,6 @@
     <i class="fa fa-usb fa-3x"></i>
 </a>
 <!--./ END BUTTON ICONS ON CANVAS-->
-
-
-<script src="../javascripts/ControlSettingsModal.js" type="application/javascript"></script>
-<script src="../javascripts/clusterValves.js" type="application/javascript"></script>
 
 <!-- Settings Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -291,6 +277,27 @@
 </div>
 <!--./ END SETTINGS MODAL-->
 
+<!-- Settings Modal -->
+<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="myModalLabel">Code Editor</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="clearSettingsTable();">Clear</button>
+                <button id="export-btn" onclick="totalExport();" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--./ END SETTINGS MODAL-->
+
+
 <!-- Valve Cluster Modal -->
 <div class="modal fade" id="valveClusterModal" tabindex="-1" data-backdrop="false" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document" style="width: 220px; position: absolute; top: 50px; left: 50px;">
@@ -328,11 +335,24 @@
 </div><!-- /.modal -->
 <!-- ./End Valve Cluster Modal -->
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4" style="background-color: #FAFAFA; height: 100%; overflow-y: scroll;">
+            testing
+            <br />
+            testing
+            <br />
+            testing
+        </div>
+        <div class="col-lg-8" style="padding-left: 0px; padding-right: 0px">
+            <canvas id="c" tabindex="0" resize="true"></canvas>
+        </div>
 
-<canvas id="c" tabindex="0" resize="true"></canvas>
+    </div>
+</div>
 <div id="renderContainer" class="hidden-block fade-transition"></div>
 <!--This is where valves go!-->
-<div id="content"></div>
+<!--<div id="content"></div>-->
 <!--./END 3DUF CANVAS-->
 
 <!-- jQuery -->
@@ -346,16 +366,7 @@
 <!-- Custom Theme JavaScript -->
 <script src="./lib/sbadmin/sb-admin-2.js"></script>
 <!-- 3DuF JavaScript -->
-<script src="../javascripts/ValveCommands.js" type="application/javascript"></script>
-<script src="../javascripts/DispenserCommands.js" type="application/javascript"></script>
-<script src="./assets/js/3DuFcontrol.js"></script>
 <script src="./cc.js"></script>
-
-<script src="../javascripts/SetDispenseRate.js"></script>
-
-<!--JavaScript for Hardware Initializations-->
-<script src="../javascripts/EqualFlowRateInit.js"></script>
-
 
 </body>
 

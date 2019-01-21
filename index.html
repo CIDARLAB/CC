@@ -1,2 +1,137 @@
-Test
-<script src="./cc.js"></script>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/nouislider/nouislider.min.js"></script>
+    <script src="lib/filesaver/FileSaver.min.js"></script>
+    <script src="lib/three/three.min.js"></script>
+    <script src="lib/popdown/jquery.popdown.min.js"></script>
+
+    <link rel="stylesheet" href="lib/nouislider/nouislider.min.css">
+
+    <link rel="stylesheet" href="lib/material/material-kit.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!--<link rel="stylesheet" href="lib/bootstrap/style.css">-->
+    <link rel="stylesheet" href="modified.css">
+    <script src="lib/material/popper.min.js"></script>
+    <script src="lib/material/bootstrap-material-design.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+</head>
+<style>
+    .btn{
+        background-color: rgb(238, 238, 238);
+    }
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.2/ace.js"></script>
+
+<!-- Page Content Holder -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4" style="text-align: center; background-color: #FAFAFA; height: 100%; overflow-y: scroll;">
+            <!--<div class="navbar">-->
+            <!--<div style="text-align:center; width: 100%; padding-top:15px ">-->
+                <!--<img width="70%" src="img/logo.png">-->
+            <!--</div>-->
+            <h2>Execution Code</h2>
+            <div id="code-container" style=" text-align: center; padding-right: 0px; padding-left: 0px; width: 100%; height: 500px">
+
+                <textarea rows="20" id="text-area-code" style="width: 100%; height: 100%">
+                                    function foo(items) {
+                var x = "All this is syntax highlighted";
+                return x;
+
+                </textarea>
+
+                <button type="button" class="btn btn-success"><i class="fas fa-play-arrow"></i> Play</button>
+                <button type="button" class="btn btn-danger">Stop</button>
+                <button type="button" class="btn btn-warning">Pause</button>
+
+            </div>
+
+
+            <!--<script>-->
+                <!--var editor = ace.edit("code-container");-->
+                <!--// editor.setTheme("ace/theme/monokai");-->
+                <!--editor.session.setMode("ace/mode/javascript");-->
+
+                <!--window.editor = editor;-->
+            <!--</script>-->
+
+
+
+            <!--</div>-->
+        </div>
+        <div class="col-8" style="padding-left: 0px; padding-right: 0px">
+            <div id="view_container" class="page-content">
+                <div id="canvas_block" class="shown-block fade-transition">
+                    <canvas id="c" tabindex="0" resize></canvas>
+                </div>
+                <div id="renderContainer" class="hidden-block fade-transition" >
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<!--BUTTON ICONS ON CANVAS-->
+<div id="main_tools">
+    <a data-toggle="modal" data-target="#findJSON" onclick="localStorage.setItem('JSONloaded', 'false');" id="uploadToggle">
+        <i class="fa fa-folder fa-3x"></i>
+    </a>
+    <a onclick="drawValveTable(JSON.parse(localStorage.pumpData)); drawDispenserTable(JSON.parse(localStorage.dispenserData));" data-toggle="modal" data-target="#myModal" id="settingsToggle">
+        <i class="fa fa-cog fa-3x"></i>
+    </a>
+    <a onclick= "window.open('../serialcommunication')" id="serialCommToggle">
+        <i class="fa fa-usb fa-3x"></i>
+    </a>
+</div>
+<!--./ END BUTTON ICONS ON CANVAS-->
+
+<div id="findJSON" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Upload Design Schematic </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="file" class="upload" id="json_in" accept=".json, .JSON|json designs/*"/>
+                    <i class="material-icons">attach_file</i>
+                    <label for="json_in">Click here to upload JSON file</label>
+                </div>
+            </div>
+            <div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal" onclick="setNewSession();" > Start New Session </button>-->
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="loadJSON"> Load  </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script src="cc.js"></script>
+<script src="lib/material/material-kit.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.popdown').popdown();
+    });
+</script>
+</html>

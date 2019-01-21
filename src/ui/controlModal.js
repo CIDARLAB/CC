@@ -1,5 +1,5 @@
 /**
- * This file would contain the ko viewmodels that bind the entire control modal to the actual data in the bg
+ * This file would contain the ko viewmodels that bind the entire core modal to the actual data in the bg
  * 
  * Ideally some of these methods would be disposed off
  */

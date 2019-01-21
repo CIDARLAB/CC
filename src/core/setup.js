@@ -7,10 +7,10 @@ export default class Setup{
      * The constructor takes a json, then dynamically creates the microfluidic object from that
      * @param json
      */
-    constructor(json){
+    constructor(device){
         //Initialize everything !!!!!
-        let chip = new Microfluidic(json);
-        this.__chip = chip;
+        // let chip = new Microfluidic(json);
+        this.__chip = null;
         this.__pumps = [];
         this.__peripherals = [];
         this.__hardwaremap = new Map();
@@ -38,8 +38,21 @@ export default class Setup{
 
     toggleValve(valveid){
         let pump = this.__hardwaremap.get(valveid);
-        let openvalue = pump.getOpen
+        let openvalue = pump.Open;
+        let closevalue = pump.Close;
         pump.setState();
+    }
+
+    getValves(){
+        if(this.__chip == null){
+            alert("Error: Microfluidic device object has not been initiated in the device");
+        }
+        return this.__chip.getValves();
+    }
+
+    initialize(device){
+        let chip = new Microfluidic(device);
+        this.__chip = chip;
     }
 
 }
