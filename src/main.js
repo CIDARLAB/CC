@@ -5,6 +5,7 @@ import {Examples, Registry} from "ThreeDuF";
 import ControlViewManager from "./controlViewManager";
 import Setup from "./core/setup";
 import * as Singleton from './core/singleton';
+import ExecutionEnvironment from "./core/executionEnvironment";
 
 
 // console.log(Examples);
@@ -143,6 +144,9 @@ function handleFiles() {
 window.onload = function () {
     let setup = new Setup();
     Singleton.defaultSetup = setup;
+    let executionEnvironment = new ExecutionEnvironment();
+    Singleton.defaultExecutionEnvironment = executionEnvironment;
+
     let viewManager = new ControlViewManager();
     viewManager.loadDeviceFromJSON(JSON.parse(Examples["example2"]));
     viewManager.updateGrid();
@@ -166,6 +170,7 @@ window.onload = function () {
             viewManager.loadDeviceFromJSON(JSON.parse(reader.result));
             // console.log(viewManager.currentDevice);
             setup.initialize(viewManager.currentDevice);
+            console.log(setup)
             // localStorage.setItem('JSONtoLoad', defaultJSON);
             // localStorage.setItem('JSONloaded', 'true');
             // localStorage.setItem('loadControls', 'true');

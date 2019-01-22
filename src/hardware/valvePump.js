@@ -1,13 +1,13 @@
-export default class Pump {
+export default class ValvePump {
 
     /**
      * Default constructor for the Pump object
      * @param id
      */
-    constructor(id) {
-        console.log(id);
-        this.__id = id;
+    constructor(component) {
+        this.__componentReference = component;
     }
+
 
     /**
      * Sets the id of the Pump object
@@ -40,9 +40,15 @@ export default class Pump {
     //     this.__hwshield = value;
     // }
 
+    /**
+     * Returns the component reference
+     * @returns {}
+     */
+    get Reference(){
+        this.__componentReference;
+    }
 
-
-
+    
     set Precision(value) {
         this.__Precision = value;
     }

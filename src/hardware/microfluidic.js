@@ -1,3 +1,6 @@
+import ValvePump from "./valvePump";
+const Singleton = require('../core/singleton');
+
 export default class Microfluidic {
 
     /**
@@ -42,6 +45,10 @@ export default class Microfluidic {
         return this.__name;
     }
 
+    get Device(){
+        return this.__device;
+    }
+
     /**
      * This method creates valves from JSON
      * @private
@@ -62,9 +69,9 @@ export default class Microfluidic {
         //
         // let componentcollection = this.__json.components;
         // let connectioncollection = this.__json.connections;
-        // let valves = [];
-        // let pumps = [];
-        // let ports = [];
+        let valves = [];
+        let pumps = [];
+        let ports = [];
         // //Step 1: Identify the valves
         // for(let i in componentcollection){
         //     if(componentcollection[i].entity == "VALVE" || componentcollection[i].entity == "VALVE3D"){
@@ -73,6 +80,23 @@ export default class Microfluidic {
         //         pumps.push(componentcollection[i].id);
         //     }
         // }
+        let componentcollection = this.Device.getComponents();
+
+        let component = null;
+
+        for(let i in componentcollection){
+            component = componentcollection[i];
+            if("VALVE" == component.getType() || "VALVE3D" == component.getType()){
+                let valve = new ValvePump(component)
+                valves.push(valve);
+            }else if("PUMP" == component.getType() || "PUMP3D" == component.getType()){
+                pumps.push(component);
+            }else if("PORT" == component.getType()){
+                ports.push(component);
+            }
+        }
+
+
         // //Step 2: Traverse the connections and components to see what PORT type components are connected to these components
         // for(let i in connectioncollection){
         //     let connection = connectioncollection[i];
@@ -93,12 +117,11 @@ export default class Microfluidic {
         // }
 
 
-        console.log("Components:", this.__device.getComponents());
 
         console.log("Warning ! We still need to implement full netlist traversal to identify valves and ports for the microfluidic");
-        // this.__valves = valves;
-        // this.__ports = ports;
-        // this.__inlinePumps = pumps
+        this.__valves = valves;
+        this.__ports = ports;
+        this.__inlinePumps = pumps
     }
 
     getValves(){

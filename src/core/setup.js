@@ -1,5 +1,6 @@
 import Microfluidic from '../hardware/microfluidic';
 import Pump from '../hardware/valvepump';
+import * as Singleton from "./singleton";
 
 export default class Setup{
 
@@ -15,6 +16,24 @@ export default class Setup{
         this.__peripherals = [];
         this.__hardwaremap = new Map();
 
+    }
+
+    /**
+     * Returns the Inline pumps used in the setup
+     * @return {Array}
+     * @constructor
+     */
+    get Pumps(){
+        return this.__pumps;
+    }
+
+    /**
+     * Returns the peripherals used in the setup
+     * @return {Array}
+     * @constructor
+     */
+    get Peripherals(){
+        return this.__peripherals;
     }
 
     /**
@@ -53,6 +72,10 @@ export default class Setup{
     initialize(device){
         let chip = new Microfluidic(device);
         this.__chip = chip;
+    }
+
+    sendCommand(componentname, setvalue) {
+        console.log("Command", componentname, setvalue);
     }
 
 }

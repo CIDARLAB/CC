@@ -2,7 +2,7 @@
  * Created by rebeccawolf on 7/26/16.
  */
 
-// Parsing JSON to look for control features (valves and dispensers); load information into global variables
+// Parsing JSON to look for core features (valves and dispensers); load information into global variables
 function loadButtons() {
 
     // load file for parsing used for counting and locating buttons
@@ -21,14 +21,14 @@ function loadButtons() {
         // Use Json as a string
         var jsonString = JSON.stringify(json);
 
-        // Now look for all Port in the control layer only
+        // Now look for all Port in the core layer only
         var Re = /Port.+?\[(.+?),(.+?)\].+?/g;
         var myArray;
         var portArray = [];
         var portX = [];
         var portY = [];
 
-        // look through control layer for ports
+        // look through core layer for ports
         while ((myArray = Re.exec(controlOnly)) !== null) {
             portX.push(myArray[1]);
             portY.push(myArray[2]);
@@ -40,7 +40,7 @@ function loadButtons() {
         localStorage.portYcoords = JSON.stringify(portY);
 
         
-        // Now look for all Ports (Dispensers) in the control layer only
+        // Now look for all Ports (Dispensers) in the core layer only
         var myArrayDisp;
         var portArrayDisp = [];
         var portXDisp = [];
